@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Breathing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Box Breathing</h1>
+    <div id="app">
+        <canvas id="canvas" width="300" height="300"></canvas>
+        <p id="instruction">Breathe in</p>
+        <div class="slider-container">
+            <label for="speedRange">Seconds per side: <span id="speedValue">4</span></label>
+            <input type="range" id="speedRange" min="3" max="8" value="4">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
