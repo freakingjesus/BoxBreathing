@@ -35,21 +35,21 @@ function update(timestamp) {
     const t = elapsed / secondsPerSide; // 0-4
 
     let x, y;
-    if (t < 1) { // top: left -> right (breathe in)
-        x = margin + size * t;
-        y = margin;
-        instructionEl.textContent = 'Breathe in';
-    } else if (t < 2) { // right: top -> bottom (hold)
-        x = margin + size;
-        y = margin + size * (t - 1);
-        instructionEl.textContent = 'Hold';
-    } else if (t < 3) { // bottom: right -> left (breathe out)
-        x = margin + size * (3 - t);
-        y = margin + size;
-        instructionEl.textContent = 'Breathe out';
-    } else { // left: bottom -> top (hold)
+    if (t < 1) { // left: bottom -> top (breathe in)
         x = margin;
-        y = margin + size * (4 - t);
+        y = margin + size * (1 - t);
+        instructionEl.textContent = 'Breathe in';
+    } else if (t < 2) { // top: left -> right (hold)
+        x = margin + size * (t - 1);
+        y = margin;
+        instructionEl.textContent = 'Hold';
+    } else if (t < 3) { // right: top -> bottom (breathe out)
+        x = margin + size;
+        y = margin + size * (t - 2);
+        instructionEl.textContent = 'Breathe out';
+    } else { // bottom: right -> left (hold)
+        x = margin + size * (4 - t);
+        y = margin + size;
         instructionEl.textContent = 'Hold';
     }
 
@@ -62,6 +62,10 @@ function update(timestamp) {
 range.addEventListener('input', () => {
     secondsPerSide = parseInt(range.value, 10);
     speedValue.textContent = secondsPerSide;
+    // restart cycle at the beginning of "Breathe in"
+    elapsedTotal = 0;
+    lastTimestamp = null;
+    instructionEl.textContent = 'Breathe in';
 });
 
 speedValue.textContent = secondsPerSide;
