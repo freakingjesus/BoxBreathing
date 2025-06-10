@@ -1,0 +1,28 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+canvas {
+    background-color: #000;
+    border: 2px solid #fff;
+}
+
+.slider-container {
+    margin-top: 20px;
+}
+
+input[type=range] {
+    width: 200px;
+}
