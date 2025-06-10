@@ -50,7 +50,7 @@ function update(timestamp) {
             y = margin + size * progress;
             instructionEl.textContent = 'Breathe out';
             break;
-        default: // bottom right -> bottom left (hold)
+        case 3: // bottom right -> bottom left (hold)
             x = margin + size * (1 - progress);
             y = margin + size;
             instructionEl.textContent = 'Hold';
@@ -66,7 +66,6 @@ function update(timestamp) {
 range.addEventListener('input', () => {
     secondsPerSide = parseInt(range.value, 10);
     speedValue.textContent = secondsPerSide;
-    // restart cycle at the beginning of "Breathe in"
     elapsedTotal = 0;
     lastTimestamp = null;
     instructionEl.textContent = 'Breathe in';
@@ -74,3 +73,4 @@ range.addEventListener('input', () => {
 
 speedValue.textContent = secondsPerSide;
 requestAnimationFrame(update);
+
