@@ -30,27 +30,31 @@ function update(timestamp) {
     lastTimestamp = timestamp;
     elapsedTotal += delta;
 
-    const cycleTime = secondsPerSide * 4;
-    const elapsed = elapsedTotal % cycleTime;
-    const t = elapsed / secondsPerSide; // 0-4
+    const phase = Math.floor(elapsedTotal / secondsPerSide) % 4;
+    const progress = (elapsedTotal % secondsPerSide) / secondsPerSide;
 
     let x, y;
-    if (t < 1) { // left: bottom -> top (breathe in)
-        x = margin;
-        y = margin + size * (1 - t);
-        instructionEl.textContent = 'Breathe in';
-    } else if (t < 2) { // top: left -> right (hold)
-        x = margin + size * (t - 1);
-        y = margin;
-        instructionEl.textContent = 'Hold';
-    } else if (t < 3) { // right: top -> bottom (breathe out)
-        x = margin + size;
-        y = margin + size * (t - 2);
-        instructionEl.textContent = 'Breathe out';
-    } else { // bottom: right -> left (hold)
-        x = margin + size * (4 - t);
-        y = margin + size;
-        instructionEl.textContent = 'Hold';
+    switch (phase) {
+        case 0: // bottom left -> top left (breathe in)
+            x = margin;
+            y = margin + size * (1 - progress);
+            instructionEl.textContent = 'Breathe in';
+            break;
+        case 1: // top left -> top right (hold)
+            x = margin + size * progress;
+            y = margin;
+            instructionEl.textContent = 'Hold';
+            break;
+        case 2: // top right -> bottom right (breathe out)
+            x = margin + size;
+            y = margin + size * progress;
+            instructionEl.textContent = 'Breathe out';
+            break;
+        case 3: // bottom right -> bottom left (hold)
+            x = margin + size * (1 - progress);
+            y = margin + size;
+            instructionEl.textContent = 'Hold';
+            break;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -62,7 +66,6 @@ function update(timestamp) {
 range.addEventListener('input', () => {
     secondsPerSide = parseInt(range.value, 10);
     speedValue.textContent = secondsPerSide;
-    // restart cycle at the beginning of "Breathe in"
     elapsedTotal = 0;
     lastTimestamp = null;
     instructionEl.textContent = 'Breathe in';
@@ -70,3 +73,4 @@ range.addEventListener('input', () => {
 
 speedValue.textContent = secondsPerSide;
 requestAnimationFrame(update);
+
