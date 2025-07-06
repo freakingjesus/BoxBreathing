@@ -3,10 +3,12 @@ const ctx = canvas.getContext('2d');
 const instructionEl = document.getElementById('instruction');
 const range = document.getElementById('speedRange');
 const speedValue = document.getElementById('speedValue');
+const timerEl = document.getElementById('timer');
 
 let secondsPerSide = parseInt(range.value, 10);
 let lastTimestamp = null;
 let elapsedTotal = 0;
+let startTime = null;
 
 const size = 200; // square size
 const margin = 50; // offset from canvas edges
@@ -25,10 +27,13 @@ function drawSquare() {
 }
 
 function update(timestamp) {
+    if (!startTime) startTime = timestamp;
     if (!lastTimestamp) lastTimestamp = timestamp;
     const delta = (timestamp - lastTimestamp) / 1000;
     lastTimestamp = timestamp;
     elapsedTotal += delta;
+    const elapsedTimer = (timestamp - startTime) / 1000;
+    timerEl.textContent = `${elapsedTimer.toFixed(1)}s`;
 
     const phase = Math.floor(elapsedTotal / secondsPerSide) % 4;
     const progress = (elapsedTotal % secondsPerSide) / secondsPerSide;
