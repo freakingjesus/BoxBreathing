@@ -33,7 +33,10 @@ function update(timestamp) {
     lastTimestamp = timestamp;
     elapsedTotal += delta;
     const elapsedTimer = (timestamp - startTime) / 1000;
-    timerEl.textContent = `${elapsedTimer.toFixed(1)}s`;
+    const totalSeconds = Math.floor(elapsedTimer);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
     const phase = Math.floor(elapsedTotal / secondsPerSide) % 4;
     const progress = (elapsedTotal % secondsPerSide) / secondsPerSide;
