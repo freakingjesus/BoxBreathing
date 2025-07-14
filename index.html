@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Box Breathing</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Box Breathing</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    </head>
 <body>
     <h1>Box Breathing</h1>
     <p id="timer">0:00</p>
@@ -16,6 +17,8 @@
             <label for="speedRange">Seconds per side: <span id="speedValue">4</span></label>
             <input type="range" id="speedRange" min="3" max="8" value="4">
         </div>
+        <button id="saveBtn">Save</button>
+        <button id="loadBtn">Load</button>
     </div>
     <script src="script.js"></script>
 </body>
