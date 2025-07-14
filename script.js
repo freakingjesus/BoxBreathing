@@ -4,12 +4,6 @@ const instructionEl = document.getElementById('instruction');
 const range = document.getElementById('speedRange');
 const speedValue = document.getElementById('speedValue');
 const timerEl = document.getElementById('timer');
-const saveBtn = document.getElementById('saveBtn');
-const loadBtn = document.getElementById('loadBtn');
-
-const supabaseUrl = 'https://kakhtozhcphemmmyclmz.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtha2h0b3poY3BoZW1tbXljbG16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzNTQ5MzksImV4cCI6MjA2NTkzMDkzOX0.Oe8GPcFpUWeDH1CG2lN2TQ8F4m4uVqq15jlhw4f-R0g';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 let secondsPerSide = parseInt(range.value, 10);
 let lastTimestamp = null;
@@ -87,35 +81,6 @@ range.addEventListener('input', () => {
 
 
 speedValue.textContent = secondsPerSide;
-
-saveBtn.addEventListener('click', async () => {
-    const { error } = await supabase.from('sessions').insert({
-        seconds_per_side: secondsPerSide,
-        elapsed_total: elapsedTotal
-    });
-    if (error) {
-        console.error('Save failed:', error.message);
-    }
-});
-
-loadBtn.addEventListener('click', async () => {
-    const { data, error } = await supabase
-        .from('sessions')
-        .select('*')
-        .order('id', { ascending: false })
-        .limit(1)
-        .single();
-    if (error) {
-        console.error('Load failed:', error.message);
-        return;
-    }
-    if (data) {
-        secondsPerSide = data.seconds_per_side;
-        elapsedTotal = data.elapsed_total;
-        range.value = secondsPerSide;
-        speedValue.textContent = secondsPerSide;
-    }
-});
 
 requestAnimationFrame(update);
 
